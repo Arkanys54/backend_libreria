@@ -16,6 +16,14 @@ var builder = WebApplication.CreateBuilder(args);
 // y esta fuente simplemente se ignora, quedando las variables de entorno.
 builder.Configuration.AddUserSecrets(typeof(Program).Assembly, optional: true);
 
+// En producción (Render / contenedor) se escucha en el puerto indicado por la
+// variable de entorno PORT. En local se respeta la configuración de launchSettings.
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
+
 // --- Servicios ---------------------------------------------------------------
 
 var connectionString = builder.Configuration.GetConnectionString("Default")
@@ -97,13 +105,17 @@ using (var scope = app.Services.CreateScope())
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
+// Swagger disponible también en producción para poder explorar la API desplegada.
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Solo se fuerza HTTPS en local; en producción el proxy (Render) termina el TLS,
+// así que redirigir a HTTPS provocaría bucles de redirección.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
 app.UseCors(CorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
