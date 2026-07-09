@@ -1,0 +1,26 @@
+# ---------- .NET ----------
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+artifacts/
+project.lock.json
+
+# ---------- Secretos / configuración local ----------
+# Contiene la cadena de conexión y la JWT key de desarrollo: NO debe subirse.
+appsettings.Development.json
+appsettings.*.Local.json
+
+# ---------- Logs ----------
+*.log
+
+# ---------- Sistema operativo / editor ----------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# ---------- Herramientas del agente ----------
+.claude/

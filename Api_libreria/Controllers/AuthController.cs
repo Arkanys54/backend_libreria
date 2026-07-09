@@ -1,0 +1,33 @@
+using BookReviews.Application.DTOs.Auth;
+using BookReviews.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Api_libreria.Controllers;
+
+[ApiController]
+[Route("api/auth")]
+public class AuthController : ControllerBase
+{
+    private readonly IAuthService _authService;
+
+    public AuthController(IAuthService authService)
+    {
+        _authService = authService;
+    }
+
+    [HttpPost("register")]
+    [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status201Created)]
+    public async Task<ActionResult<AuthResponse>> Register(RegisterRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _authService.RegisterAsync(request, cancellationToken);
+        return CreatedAtAction(nameof(Register), response);
+    }
+
+    [HttpPost("login")]
+    [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+    public async Task<ActionResult<AuthResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _authService.LoginAsync(request, cancellationToken);
+        return Ok(response);
+    }
+}

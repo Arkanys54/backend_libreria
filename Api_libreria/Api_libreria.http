@@ -1,0 +1,6 @@
+@Api_libreria_HostAddress = http://localhost:5129
+
+GET {{Api_libreria_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

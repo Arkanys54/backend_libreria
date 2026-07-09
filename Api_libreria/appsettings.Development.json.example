@@ -1,0 +1,17 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "Default": "Host=localhost;Port=5432;Database=bookreviews;Username=postgres;Password=TU_PASSWORD"
+  },
+  "Jwt": {
+    "Key": "reemplaza-esto-por-una-clave-larga-y-secreta-solo-para-desarrollo"
+  },
+  "Cors": {
+    "AllowedOrigins": ["http://localhost:5173"]
+  }
+}
